@@ -181,7 +181,10 @@ module.exports.statusUpdate = async (req, res) => {
   } else {
     const categoryIds = ids.split(',').map((id) => parseInt(id, 10));
     const allCategroies = await Category.findAll({
-      attributes: ['status']
+      attributes: ['status'],
+      where : {
+        id : categoryIds
+      }
     });
     const updateData = allCategroies.map((v, i) => {
       return {
