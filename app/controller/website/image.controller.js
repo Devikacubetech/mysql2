@@ -8,6 +8,22 @@ module.exports.SaveImages = async (req, res) => {
 
     try {
 
+        //for single image.................
+
+        const imageData = {
+            image: req.file.filename
+        }
+
+        await Images.create(imageData);
+
+        let response = {
+            status: 200,
+            Message: 'images Inserted Successfully.....',
+            Data: imageData
+        }
+        res.send(response);
+
+
         //for two different images..............
 
         // const { image, coverimage } = req.files;
@@ -26,37 +42,36 @@ module.exports.SaveImages = async (req, res) => {
         // }
         // res.send(response);
 
-        //for multiple images 
+        //for multiple images.................... 
 
-        const image = [];
-        const coverimage = [];
+        // const image = [];
+        // const coverimage = [];
 
-        (req.files).filter((v, i) => {
-            if (v.fieldname == 'image') {
-                image.push(v.filename);
-            } else if (v.fieldname == 'coverimage') {
-                coverimage.push(v.filename);
-            }
-        })
-        const imageData = {
-            image : JSON.stringify(image),
-            coverimage : JSON.stringify(coverimage)
-        }
-         await Images.create(imageData);
+        // (req.files).filter((v, i) => {
+        //     if (v.fieldname == 'image') {
+        //         image.push(v.filename);
+        //     } else if (v.fieldname == 'coverimage') {
+        //         coverimage.push(v.filename);
+        //     }
+        // })
+        // const imageData = {
+        //     image : JSON.stringify(image),
+        //     coverimage : JSON.stringify(coverimage)
+        // }
+        //  await Images.create(imageData);
 
-        let response = {
-            status: 200,
-            Message: 'images Inserted Successfully.....',
-            Data : imageData
-        }
-        res.send(response);
+        // let response = {
+        //     status: 200,
+        //     Message: 'images Inserted Successfully.....',
+        //     Data : imageData
+        // }
+        // res.send(response);
     }
     catch {
         response = {
             status: 200,
             Message: 'error while Inserting images.....',
         }
-        res.send(response); 
-        // res.send('error....')
+        res.send(response);
     }
 } 
