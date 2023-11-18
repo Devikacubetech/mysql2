@@ -12,5 +12,6 @@ app.get('/',(req,res)=> {
 
 require('./app/router/website/category.routes')(app);
 require('./app/router/website/form.routes')(app);
+require('./app/router/website/image.routes')(app);
 
 app.listen(5000);
