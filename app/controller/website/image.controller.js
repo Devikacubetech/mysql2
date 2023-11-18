@@ -8,7 +8,7 @@ module.exports.SaveImages = async (req, res) => {
 
     try {
         // console.log(req.files);
-        res.send('mnk')
+        res.send(req.files)
         // const { image, coverimage } = req.files;
         // const imageData = {
             // image: image[0].filename,
@@ -31,5 +31,6 @@ module.exports.SaveImages = async (req, res) => {
         //     Message: 'error while Inserting images.....'
         // }
         // res.send(response); 
+        res.send('error....')
     }
 } 

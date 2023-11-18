@@ -12,7 +12,7 @@ module.exports = (app) => {
     // router.post('/saveimage', upload.fields([{ name: 'image' }, { name: 'coverimage' }]), Images.SaveImages)
 
     // for multiple images 
-    router.post('/saveimage', upload.array('image',2),upload.array('coverimage',2), Images.SaveImages)
+    router.post('/saveimage', upload.any(), Images.SaveImages)
 
     app.use('/api/website/image', router);
 }
