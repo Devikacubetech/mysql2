@@ -1,7 +1,22 @@
 const Images = require('../../model/image.model');
 
 module.exports.DisplayImage = async (req, res) => {
-    res.send('display All Images..');
+    try {
+       const  allImage = await  Images.findAll();
+       const response = {
+        status : 200,
+        Message : 'Records Found......',
+        Data : allImage
+       }
+       res.send(response);
+    } catch {
+        const response = {
+            status : 500,
+            Message : 'Records not Found......',
+            Data : ''
+           }
+           res.send(response);
+    }
 }
 
 module.exports.SaveImages = async (req, res) => {
