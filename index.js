@@ -9,23 +9,24 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.get('/', async(req, res) => {
-  const transporter = nodemailer.createTransport({
-    host: appconfig.email_host,
-    port: 465,
-    secure: true,
-    auth: {
-      user: appconfig.email_user,
-      pass: appconfig.email_password,
-    },
-  });
+  // const transporter = nodemailer.createTransport({
+  //   host: appconfig.email_host,
+  //   port: 465,
+  //   secure: true,
+  //   auth: {
+  //     user: appconfig.email_user,
+  //     pass: appconfig.email_password,
+  //   },
+  // });
 
-  const info = await transporter.sendMail({
-    from: `"senderName" <${appconfig.email_user}>`, // sender address
-    to: "abc@gmail.com", // list of receivers
-    subject: "Hello ✔", // Subject line
-    text : 'hello world !', // for text
-    html: "<h1>Email For NodeMailer Testing</h1>", // for html 
-  });
+  // const info = await transporter.sendMail({
+  //   from: `"sender name" <${appconfig.email_user}>`, 
+  //   to: "abc@gmail.com",  // list of receivers
+  //   subject: "Hello ✔", // Subject line
+  //   text: "Hello world?", //plain text body
+  //   html: "<b>Hello world?</b>", // html body
+  // });
+  
   res.status(200).send('Welcome to MySql2');
 });
 

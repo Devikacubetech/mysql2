@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const Images = require('../../controller/website/image.controller');
-const upload = require('../../config/multer');
+const upload = require('../../libary/multer');
 
 module.exports = (app) => {
     router.get('/', Images.DisplayImage);

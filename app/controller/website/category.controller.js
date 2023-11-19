@@ -54,7 +54,7 @@ module.exports.createCategory = async (req, res) => {
       res.status(500).send(response);
     })
   } else {
-    await Category.update(categoryData, {
+     Category.update(categoryData, {
       where: { id: req.params.id }
     })
       .then(([updatedCount, updatedCategory]) => {
