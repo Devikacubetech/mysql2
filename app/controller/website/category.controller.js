@@ -54,7 +54,7 @@ module.exports.createCategory = async (req, res) => {
       res.status(500).send(response);
     })
   } else {
-     Category.update(categoryData, {
+    Category.update(categoryData, {
       where: { id: req.params.id }
     })
       .then(([updatedCount, updatedCategory]) => {
@@ -175,45 +175,53 @@ module.exports.statusUpdate = async (req, res) => {
     response = {
       status: 400,
       Message: 'No category IDs provided for status Update',
-      Data: null,
+      Data: [],
     };
     res.status(400).send(response);
   } else {
-    const categoryIds = ids.split(',').map((id) => parseInt(id, 10));
+    const categoryIds = ids.split(',')
+
     const allCategroies = await Category.findAll({
-      attributes: ['status'],
-      where : {
-        id : categoryIds
+      attributes: ['status', 'id'],
+      where: {
+        id: categoryIds
       }
     });
-    const updateData = allCategroies.map((v, i) => {
-      return {
-        status: !(v.status)
+    if (allCategroies.length == 0) {
+      response = {
+        status: 200,
+        Message: 'Data Not Available in DataBase..',
+        Data: [],
       };
-    })
-
-  await Category.update(updateData,{
-    where : {
-      id : categoryIds
+      res.status(200).send(response);
+    } else {
+      try {
+        allCategroies.map(async (category) => {
+          const updatedStatus = !category.dataValues.status;
+          await Category.update(
+            { status: updatedStatus },
+            {
+              where: {
+                id: category.dataValues.id
+              }
+            }
+          );
+        })
+        response = {
+          status: 200,
+          Message: 'Status Updated Successfully.......',
+          Data: allCategroies, ids
+        };
+        res.status(200).send(response);
+      } catch {
+        response = {
+          status: 500,
+          Message: 'Error While Updating Status.......',
+          Data: allCategroies, ids
+        };
+        res.status(500).send(response);
+      }
     }
-  }).then((result)=> {
-    response = {
-      status: 400,
-      Message: 'Status updated Successfully.......',
-      Data: allCategroies,
-      newData: result
-    };
-    res.status(400).send(response);
-  }).catch((error)=> {
-    response = {
-      status: 400,
-      Message: 'error',
-      Data: allCategroies,
-      newData: updateData
-    };
-    res.status(400).send(response);
-  })
-    
   }
 }
 
